@@ -1,0 +1,260 @@
+@layer default {
+
+	:root:has(img-dialog[data-modal="true"] dialog[open]) {
+		overflow: clip;
+		/* remove scrollbar when modal is open */
+	}
+
+	img-dialog {
+		--_color-back: var(--color-back, black);
+		--_color-outline: var(--color-outline, wheat);
+		--_color-buttons: var(--color-buttons, wheat);
+		--_non-modal-height: var(--non-modal-height, 50svh);
+		--_color-bullets-secondary: var(--color-bullets-secondary, #682f2f);
+		--_size-bullets: var(--size-bullets, clamp(10px, 1vw, 2vw));
+		--_border-bullets: var(--border-bullets, 2px solid white);
+		display: block;
+
+		/* dialog */
+		dialog[open] {
+			width: 90svw;
+			height: 90svh;
+			width: fit-content;
+			overflow: hidden;
+			/* transition */
+			background-color: var(--_color-back);
+			border-color: var(--_color-outline);
+			border-width: 1px;
+			border-style: solid;
+			border-radius: 5px;
+		}
+	}
+
+	/* [data-modal="false"] */
+	img-dialog[data-modal="false"] {
+		width: 100%;
+
+		dialog[open] {
+			position: relative;
+			width: 100%;
+			height: var(--_non-modal-height);
+			box-sizing: border-box;
+		}
+
+		dialog[open] img {
+			margin: auto;
+			outline: thin solid var(--_color-outline);
+		}
+	}
+
+	img-dialog {
+		dialog::backdrop {
+			background-color: rgb(0 0 0 / 0%);
+		}
+
+		dialog[open]::backdrop {
+			background-color: rgb(0 0 0 / 80%);
+		}
+
+		img {
+			position: absolute;
+			position: static;
+			display: none;
+			/* top: 0; */
+			left: 0;
+			opacity: 0;
+			/* object-fit: cover; */
+			width: auto;
+			height: auto;
+			max-width: 100%;
+			max-height: 100%;
+		}
+
+		img.current {
+			opacity: 1 !important;
+			display: block;
+		}
+
+		/* all buttons */
+		button {
+			appearance: none;
+			background: transparent;
+			border: 0;
+			outline: 0;
+			cursor: pointer;
+			z-index: 1;
+			color: var(--_color-buttons);
+			transition-property: scale, color;
+			transition-duration: 0.1s;
+			transition-timing-function: ease-in-out;
+			transition-delay: 0s;
+		}
+
+		/* arrow buttons */
+		button.arrows {
+			position: absolute;
+			top: 50%;
+			/* relative to the parent */
+			translate: 0 -50%;
+			/* relative to the element itself */
+			padding: 0;
+			margin: 0;
+		}
+
+		/* bullets */
+		div.bullets {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			width: 75%;
+			position: absolute;
+			bottom: 2%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			column-gap: 2vw;
+		}
+
+		button.bullet {
+			border-radius: 100%;
+			border: var(--_border-bullets);
+			width: var(--_size-bullets);
+			aspect-ratio: 1;
+			cursor: pointer;
+			transition: border-color 0.3s;
+			transition: background-color 0.3s;
+		}
+
+		button.bullet:hover {
+			border-color: var(--_color-bullets-secondary);
+		}
+
+		button.bullet-current {
+			background-color: var(--_color-bullets-secondary);
+		}
+
+		/* [data-theme=""] */
+		button.close::after {
+			content: '\2718';
+			content: '\2715';
+			content: '\2716';
+		}
+
+		button.close {
+			position: absolute;
+			font-size: 60px;
+			font-weight: 100;
+			top: clamp(5px, 2%, 30px);
+			right: clamp(5px, 5%, 30px);
+		}
+
+		button.arrows.left::after {
+			content: '\2039';
+		}
+
+		button.arrows.right::after {
+			content: '\203A';
+		}
+
+		button.arrows {
+			font-size: 160px;
+			font-weight: 700;
+		}
+
+		button.arrows.left {
+			left: clamp(5px, 5%, 30px);
+		}
+
+		button.arrows.right {
+			right: clamp(5px, 5%, 30px);
+		}
+
+		button {
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: color-mix(in srgb, var(--_color-buttons) 50%, white);
+		}
+
+		button:hover,
+		button:focus-visible {
+			scale: 1.1;
+			color: color-mix(in srgb, var(--_color-buttons) 70%, black);
+			-webkit-text-stroke-color: color-mix(in srgb, var(--_color-buttons) 30%, white);
+		}
+
+		button:active {
+			color: color-mix(in srgb, var(--_color-buttons) 50%, white);
+			-webkit-text-stroke-color: color-mix(in srgb, var(--_color-buttons) 70%, black);
+		}
+
+		button:focus-visible {
+			outline: 2px solid color-mix(in srgb, var(--_color-buttons) 70%, white);
+			outline-offset: 1px;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		img-dialog dialog[open] {
+			animation: show 0.25s ease-in-out normal;
+		}
+
+		@keyframes show {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+@layer attributes {
+
+	/* [data-transfx] */
+
+	img-dialog[data-transfx="flash"] {
+		img {
+			transition: opacity 0.2s linear;
+			opacity: 0;
+		}
+
+		img.current {
+			opacity: 1 !important;
+		}
+	}
+
+	img-dialog[data-transfx="grey"] {
+		img {
+			filter: grayscale(100%);
+			transition: filter 2s ease-in-out;
+		}
+
+		img.current {
+			filter: grayscale(0%) !important;
+		}
+	}
+
+	img-dialog[data-transfx="blend"] {
+		img {
+			filter: brightness(0%);
+			transition: filter 2s ease-in-out;
+		}
+
+		img.current {
+			filter: brightness(100%) !important;
+		}
+	}
+
+	img-dialog[data-transfx="slide"] {
+		img {
+			transform: translateX(100%);
+			transition-property: transform, opacity;
+			transition-duration: 2s;
+			transition-timing-function: ease-in-out;
+		}
+
+		img.current {
+			transform: translateX(0%) !important;
+		}
+	}
+}
