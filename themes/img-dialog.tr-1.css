@@ -1,0 +1,5 @@
+@layer themes {
+	img-dialog[data-theme="tr-1"] .showcase button {
+		-webkit-text-stroke-width: 2px;
+		-webkit-text-stroke-color: var(--secondary);
+}

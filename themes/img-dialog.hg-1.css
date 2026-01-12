@@ -1,0 +1,150 @@
+@layer themes {
+    /* img */
+    img-dialog[data-theme="hg-1"] img {
+        position: relative;
+        object-fit: contain;
+        display: none;
+        width: 100%;
+    }
+
+    img-dialog[data-theme="hg-1"] img.current {
+        display: block;
+    }
+
+    /* modal */
+    img-dialog[data-theme="hg-1"] .modal {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: var(--background);
+    }
+
+    /* showcase */
+    img-dialog[data-theme="hg-1"] .showcase {
+        width: 90%;
+        height: fit-content;
+        left: 5%;
+        top: 2%;
+        outline: thin solid var(--borders);
+        outline-offset: var(--borders-offset);
+    }
+    
+    /* bullets */
+    img-dialog div.bullets {
+        bottom: 18px;
+    }
+
+    /* all buttons */
+    /* ----------------- */
+    img-dialog[data-theme="hg-1"] button {
+        --stroke-color: black;
+        --stroke-width: 2px;
+        -webkit-text-stroke-width: 0px;
+        -webkit-text-stroke-color: var(--stroke-color);
+        text-shadow: -1px 1px 2px var(--stroke-color),
+            1px 1px 2px var(--stroke-color), 1px -1px 0 var(--stroke-color),
+            -1px -1px 0 var(--stroke-color);
+        color: var(--complementary);
+        padding: 0;
+    }
+
+    img-dialog[data-theme="hg-1"] button:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 1px;
+    }
+
+    img-dialog[data-theme="hg-1"] button:active {
+        color: whitesmoke;
+        -webkit-text-stroke-color: black;
+    }
+
+    /* close button */
+    /* ----------------- */
+    img-dialog[data-theme="hg-1"] button.close::after {
+        content: "\d7";
+    }
+
+    img-dialog[data-theme="hg-1"] button.close {
+        font-weight: 600;
+        top: 15px;
+        right: 25px;
+        font-size: 2rem;
+    }
+
+    /* arrow buttons */
+    /* ----------------- */
+    img-dialog[data-theme="hg-1"] button.arrows.left::after {
+        content: "\2039";
+    }
+
+    img-dialog[data-theme="hg-1"] button.arrows.right::after {
+        content: "\203A";
+    }
+
+    img-dialog[data-theme="hg-1"] button.arrows {
+        font-size: 3rem;
+        font-weight: bold;
+    }
+
+    img-dialog[data-theme="hg-1"] button.arrows.left {
+        left: clamp(5px, 4%, 30px);
+    }
+
+    img-dialog[data-theme="hg-1"] button.arrows.right {
+        right: clamp(5px, 4%, 30px);
+    }
+
+    /* @media */
+    /* ----------------- */
+    @media (hover: hover) {
+        img-dialog[data-theme="hg-1"] button:hover {
+            scale: 1.1;
+            color: color-mix(in srgb, var(--color) 70%, black);
+            -webkit-text-stroke-color: color-mix(
+                in srgb,
+                var(--primary) 30%,
+                white
+            );
+            -webkit-text-stroke-width: 4px;
+        }
+    }
+
+    @media (min-width: 640px) {
+        img-dialog[data-theme="hg-1"] img {
+            object-fit: cover;
+            height: 100%;
+        }
+
+        img-dialog[data-theme="hg-1"] .showcase {
+            width: 80%;
+            height: 80%;
+            position: absolute;
+            left: 10%;
+            top: 10%;
+            z-index: 1;
+            outline: thin solid var(--borders);
+            outline-offset: var(--borders-offset);
+        }
+
+        img-dialog[data-theme="hg-1"] button.close {
+            font-size: 2.5rem;
+        }
+    }
+
+    /* @supports color-mix */
+    /* ----------------- */
+    @supports (color: color-mix(in oklch, white, black)) {
+        img-dialog[data-theme="hg-1"] button:focus-visible {
+            outline: 2px solid color-mix(in srgb, var(--primary) 70%, white);
+        }
+
+        img-dialog[data-theme="hg-1"] button:active {
+            color: color-mix(in srgb, var(--primary) 50%, white);
+            -webkit-text-stroke-color: color-mix(
+                in srgb,
+                var(--primary) 70%,
+                black
+            );
+        }
+    }
+}
